@@ -213,7 +213,8 @@ class EngineArgs:
                                            self.max_num_seqs,
                                            model_config.max_model_len,
                                            self.max_paddings,
-                                           self.parentInstancePort)
+                                           self.parentInstancePort,
+                                           self.startFromParent)
         return model_config, cache_config, parallel_config, scheduler_config
 
 
@@ -223,7 +224,8 @@ class AsyncEngineArgs(EngineArgs):
     engine_use_ray: bool = False
     disable_log_requests: bool = False
     max_log_len: Optional[int] = None
-    parentInstancePort: int = 8000 # 父实例端口
+    parentInstancePort: int = 8000
+    startFromParent: bool = False  # 新增的参数
 
     @staticmethod
     def add_cli_args(

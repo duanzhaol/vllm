@@ -78,6 +78,8 @@ if __name__ == "__main__":
     parser.add_argument("--host", type=str, default=None)
     parser.add_argument("--port", type=int, default=8000)
     parser.add_argument("--parentInstancePort", type=int, default=8000)
+    parser.add_argument("--startFromParent", action="store_true", default=False,
+                        help="Whether to start from parent instance. Default is False.")
     parser = AsyncEngineArgs.add_cli_args(parser)
     args = parser.parse_args()
 

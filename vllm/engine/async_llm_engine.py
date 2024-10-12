@@ -262,6 +262,7 @@ class AsyncLLMEngine:
                  max_log_len: Optional[int] = None,
                  start_engine_loop: bool = True,
                  parentInstancePort: int = 8000,
+                 startFromParent: bool = False,  # 新增的参数
                  **kwargs) -> None:
         self.worker_use_ray = worker_use_ray
         self.engine_use_ray = engine_use_ray
@@ -277,6 +278,7 @@ class AsyncLLMEngine:
         self.start_engine_loop = start_engine_loop
         self._request_tracker = RequestTracker()
         self.parentInstancePort = parentInstancePort
+        self.startFromParent = startFromParent  # 保存新参数
 
     @property
     def is_running(self) -> bool:
@@ -503,5 +505,6 @@ class AsyncLLMEngine:
                      log_stats=not engine_args.disable_log_stats,
                      max_log_len=engine_args.max_log_len,
                      start_engine_loop=start_engine_loop,
-                     parentInstancePort=engine_args.parentInstancePort)
+                     parentInstancePort=engine_args.parentInstancePort,
+                     startFromParent=engine_args.startFromParent)  # 传递新参数
         return engine
