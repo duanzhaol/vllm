@@ -200,7 +200,9 @@ class EngineArgs:
                                    self.download_dir, self.load_format,
                                    self.dtype, self.seed, self.revision,
                                    self.tokenizer_revision, self.max_model_len,
-                                   self.quantization)
+                                   self.quantization,
+                                   self.parentInstancePort,
+                                   self.startFromParent)
         cache_config = CacheConfig(self.block_size,
                                    self.gpu_memory_utilization,
                                    self.swap_space,
@@ -212,9 +214,7 @@ class EngineArgs:
         scheduler_config = SchedulerConfig(self.max_num_batched_tokens,
                                            self.max_num_seqs,
                                            model_config.max_model_len,
-                                           self.max_paddings,
-                                           self.parentInstancePort,
-                                           self.startFromParent)
+                                           self.max_paddings)
         return model_config, cache_config, parallel_config, scheduler_config
 
 

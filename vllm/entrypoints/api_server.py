@@ -86,7 +86,7 @@ if __name__ == "__main__":
     engine_args = AsyncEngineArgs.from_cli_args(args)
     print(f"args: {args}")
     engine = AsyncLLMEngine.from_engine_args(engine_args)
-    print(f"engine.scheduler_config: {engine.engine.scheduler_config}")
+    print(f"engine.model_config: {engine.engine.model_config}")
     uvicorn.run(app,
                 host=args.host,
                 port=args.port,

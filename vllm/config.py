@@ -65,6 +65,8 @@ class ModelConfig:
         tokenizer_revision: Optional[str] = None,
         max_model_len: Optional[int] = None,
         quantization: Optional[str] = None,
+        parentInstancePort: int = 0,
+        startFromParent: bool = False,
     ) -> None:
         self.model = model
         self.tokenizer = tokenizer
@@ -76,6 +78,8 @@ class ModelConfig:
         self.revision = revision
         self.tokenizer_revision = tokenizer_revision
         self.quantization = quantization
+        self.parentInstancePort = parentInstancePort
+        self.startFromParent = startFromParent
 
         if os.environ.get("VLLM_USE_MODELSCOPE", "False").lower() == "true":
             # download model from ModelScope hub,
@@ -221,7 +225,12 @@ class ModelConfig:
     def get_num_layers(self, parallel_config: "ParallelConfig") -> int:
         total_num_hidden_layers = self.hf_config.num_hidden_layers
         return total_num_hidden_layers // parallel_config.pipeline_parallel_size
-
+    def __str__(self):
+        return f"""ModelConfig(model={self.model}, tokenizer={self.tokenizer},
+    tokenizer_mode={self.tokenizer_mode}, trust_remote_code={self.trust_remote_code},
+    download_dir={self.download_dir}, load_format={self.load_format}, dtype={self.dtype},
+    seed={self.seed}, revision={self.revision}, tokenizer_revision={self.tokenizer_revision},
+    quantization={self.quantization}, parentInstancePort={self.parentInstancePort}, startFromParent={self.startFromParent})"""
 
 class CacheConfig:
     """Configuration for the KV cache.
@@ -328,8 +337,6 @@ class SchedulerConfig:
         max_num_seqs: int,
         max_model_len: int,
         max_paddings: int,
-        parentInstancePort: int,
-        startFromParent: bool,
     ) -> None:
         if max_num_batched_tokens is not None:
             self.max_num_batched_tokens = max_num_batched_tokens
@@ -340,8 +347,6 @@ class SchedulerConfig:
         self.max_num_seqs = max_num_seqs
         self.max_model_len = max_model_len
         self.max_paddings = max_paddings
-        self.parentInstancePort = parentInstancePort
-        self.startFromParent = startFromParent
         self._verify_args()
 
     def _verify_args(self) -> None:
@@ -360,7 +365,7 @@ class SchedulerConfig:
                 f"({self.max_num_seqs}).")
 
     def __str__(self) -> str:
-        return f"SchedulerConfig(max_num_batched_tokens={self.max_num_batched_tokens}, max_num_seqs={self.max_num_seqs}, max_model_len={self.max_model_len}, max_paddings={self.max_paddings}, parentInstancePort={self.parentInstancePort}, startFromParent={self.startFromParent})"
+        return f"SchedulerConfig(max_num_batched_tokens={self.max_num_batched_tokens}, max_num_seqs={self.max_num_seqs}, max_model_len={self.max_model_len}, max_paddings={self.max_paddings})"
 
 _STR_DTYPE_TO_TORCH_DTYPE = {
     "half": torch.float16,
