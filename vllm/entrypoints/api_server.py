@@ -22,6 +22,11 @@ async def health() -> Response:
     """Health check."""
     return Response(status_code=200)
 
+@app.get("/modelCopy")
+async def modelCopy() -> Response:
+    """Model copy."""
+    pass 
+    return Response()
 
 @app.post("/generate")
 async def generate(request: Request) -> Response:
