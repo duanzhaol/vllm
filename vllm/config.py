@@ -328,6 +328,7 @@ class SchedulerConfig:
         max_num_seqs: int,
         max_model_len: int,
         max_paddings: int,
+        parentInstancePort: int,
     ) -> None:
         if max_num_batched_tokens is not None:
             self.max_num_batched_tokens = max_num_batched_tokens
@@ -338,6 +339,7 @@ class SchedulerConfig:
         self.max_num_seqs = max_num_seqs
         self.max_model_len = max_model_len
         self.max_paddings = max_paddings
+        self.parentInstancePort = parentInstancePort
         self._verify_args()
 
     def _verify_args(self) -> None:
@@ -355,6 +357,8 @@ class SchedulerConfig:
                 "be greater than or equal to max_num_seqs "
                 f"({self.max_num_seqs}).")
 
+    def __str__(self) -> str:
+        return f"SchedulerConfig(max_num_batched_tokens={self.max_num_batched_tokens}, max_num_seqs={self.max_num_seqs}, max_model_len={self.max_model_len}, max_paddings={self.max_paddings}, parentInstancePort={self.parentInstancePort})"
 
 _STR_DTYPE_TO_TORCH_DTYPE = {
     "half": torch.float16,

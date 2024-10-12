@@ -212,7 +212,8 @@ class EngineArgs:
         scheduler_config = SchedulerConfig(self.max_num_batched_tokens,
                                            self.max_num_seqs,
                                            model_config.max_model_len,
-                                           self.max_paddings)
+                                           self.max_paddings,
+                                           self.parentInstancePort)
         return model_config, cache_config, parallel_config, scheduler_config
 
 
@@ -222,6 +223,7 @@ class AsyncEngineArgs(EngineArgs):
     engine_use_ray: bool = False
     disable_log_requests: bool = False
     max_log_len: Optional[int] = None
+    parentInstancePort: int = 8000 # 父实例端口
 
     @staticmethod
     def add_cli_args(
