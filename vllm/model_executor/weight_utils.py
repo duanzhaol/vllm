@@ -184,6 +184,7 @@ def hf_model_weights_iterator(
     revision: Optional[str] = None,
     parentInstancePort: int = 8000,
     startFromParent: bool = False,
+    host: Optional[str] = None,  # 新增host参数
 ) -> Iterator[Tuple[str, torch.Tensor]]:
     use_safetensors = False
     use_np_cache = False
@@ -202,9 +203,10 @@ def hf_model_weights_iterator(
 
     if startFromParent:
         # 从ParentInstance加载模型参数，并且开始yield name, param
-        # 1. 想parent发起加载请求
+        # 1. 向parent发起加载请求
         # 2. 和parent建立通信域
         # 3. 传输数据，并逐个tensor yield
+        # 这里可以使用host参数来建立连接
         return
     hf_folder, hf_weights_files, use_safetensors = prepare_hf_model_weights(
         model_name_or_path,

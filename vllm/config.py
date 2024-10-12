@@ -67,6 +67,7 @@ class ModelConfig:
         quantization: Optional[str] = None,
         parentInstancePort: int = 0,
         startFromParent: bool = False,
+        host: Optional[str] = None,
     ) -> None:
         self.model = model
         self.tokenizer = tokenizer
@@ -80,7 +81,7 @@ class ModelConfig:
         self.quantization = quantization
         self.parentInstancePort = parentInstancePort
         self.startFromParent = startFromParent
-
+        self.host = host
         if os.environ.get("VLLM_USE_MODELSCOPE", "False").lower() == "true":
             # download model from ModelScope hub,
             # lazy import so that modelscope is not required for normal use.
@@ -230,7 +231,7 @@ class ModelConfig:
     tokenizer_mode={self.tokenizer_mode}, trust_remote_code={self.trust_remote_code},
     download_dir={self.download_dir}, load_format={self.load_format}, dtype={self.dtype},
     seed={self.seed}, revision={self.revision}, tokenizer_revision={self.tokenizer_revision},
-    quantization={self.quantization}, parentInstancePort={self.parentInstancePort}, startFromParent={self.startFromParent})"""
+    quantization={self.quantization}, parentInstancePort={self.parentInstancePort}, startFromParent={self.startFromParent}, host={self.host})"""
 
 class CacheConfig:
     """Configuration for the KV cache.

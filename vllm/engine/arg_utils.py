@@ -202,7 +202,8 @@ class EngineArgs:
                                    self.tokenizer_revision, self.max_model_len,
                                    self.quantization,
                                    self.parentInstancePort,
-                                   self.startFromParent)
+                                   self.startFromParent,
+                                   self.host)
         cache_config = CacheConfig(self.block_size,
                                    self.gpu_memory_utilization,
                                    self.swap_space,
@@ -226,7 +227,7 @@ class AsyncEngineArgs(EngineArgs):
     max_log_len: Optional[int] = None
     parentInstancePort: int = 8000
     startFromParent: bool = False  # 新增的参数
-
+    host: Optional[str] = None
     @staticmethod
     def add_cli_args(
             parser: argparse.ArgumentParser) -> argparse.ArgumentParser:
